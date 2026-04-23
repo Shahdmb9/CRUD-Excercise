@@ -39,9 +39,14 @@ public class CustomerController {
     }
 
     @DeleteMapping("/deleteCustomer/{index}")
-    public ApiResponse deleteCustomer(@PathVariable int index){
-        customers.remove(index);
-        return new ApiResponse("Customer deleted successfully");
+    public ApiResponse deleteCustomer(@PathVariable String id){
+        for (Customer customer : customers) {
+            if(customer.getId().equals(id)){
+                customers.remove(customer);
+                return new ApiResponse("Customer deleted successfully");
+            }
+        }
+        return new ApiResponse("Customer not found");
     }
 
     @PutMapping("/withdraw/{id}/{amount}")
